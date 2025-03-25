@@ -1,0 +1,17 @@
+{
+  "name": "quicksnap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/QuickSnap.js",
+  "module": "dist/QuickSnap.js",
+  "types": "dist/QuickSnap.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Sayandeep Karak",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}
