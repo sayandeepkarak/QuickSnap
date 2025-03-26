@@ -1,1 +1,2 @@
-export { default as QuickSnap } from "./QuickSnap";
+import QuickSnap from "./QuickSnap";
+export { QuickSnap };

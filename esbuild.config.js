@@ -21,7 +21,7 @@ build({
   platform: "browser",
 })
   .then(() => {
-    const successMsg = "🔥 QuickSnap build successful!";
+    const successMsg = "🔥 QuickSnap build successfull!";
     console.log(successMsg);
     catchBuildLog(successMsg);
   })
