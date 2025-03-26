@@ -2,16 +2,22 @@
   "name": "quicksnap",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/QuickSnap.js",
-  "module": "dist/QuickSnap.js",
-  "types": "dist/QuickSnap.d.ts",
+  "type": "module",
+  "module": "dist/QuickSnap.min.mjs",
+  "exports": {
+    "import": "./dist/QuickSnap.min.mjs"
+  },
+  "types": "types/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc && node esbuild.config.js",
+    "dev": "tsc && node esbuild.config.js --dev"
   },
   "keywords": [],
-  "author": "Sayandeep Karak",
-  "license": "MIT",
   "devDependencies": {
+    "@types/node": "^22.13.13",
+    "esbuild": "^0.25.1",
     "typescript": "^5.8.2"
-  }
+  },
+  "author": "Sayandeep Karak",
+  "license": "MIT"
 }
