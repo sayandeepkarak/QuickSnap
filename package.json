@@ -1,17 +1,25 @@
 {
   "name": "quicksnap",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/QuickSnap.js",
-  "module": "dist/QuickSnap.js",
-  "types": "dist/QuickSnap.d.ts",
-  "scripts": {
-    "build": "tsc"
+  "description": "A lightweight webcam web component for snapshots",
+  "type": "module",
+  "module": "dist/QuickSnap.min.mjs",
+  "exports": {
+    "import": "./dist/QuickSnap.min.mjs"
   },
-  "keywords": [],
-  "author": "Sayandeep Karak",
-  "license": "MIT",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "build": "npm run lint && tsc && node esbuild.config.js"
+  },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.23.0",
     "typescript": "^5.8.2"
-  }
+  },
+  "author": "Sayandeep Karak",
+  "license": "MIT"
 }
