@@ -9,7 +9,7 @@ const catchBuildLog = (message) => {
 };
 
 build({
-  entryPoints: ["src/index.ts"], // Entry point should be src/
+  entryPoints: ["src/index.ts"],
   outfile: "dist/index.min.mjs",
   bundle: true,
   minify: true,
