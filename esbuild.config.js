@@ -1,5 +1,5 @@
 import { build } from "esbuild";
-import { appendFileSync, rmSync } from "fs";
+import { appendFileSync } from "fs";
 
 const LOG_FILE = "build.log";
 
@@ -8,25 +8,24 @@ const catchBuildLog = (message) => {
   appendFileSync(LOG_FILE, `[${timestamp}] ${message}\n`);
 };
 
-rmSync("dist", { recursive: true, force: true });
-
 build({
-  entryPoints: ["src/index.ts"],
-  outfile: "dist/QuickSnap.min.mjs",
+  entryPoints: ["src/index.ts"], // Entry point should be src/
+  outfile: "dist/index.min.mjs",
   bundle: true,
   minify: true,
+  keepNames: true,
   sourcemap: false,
   format: "esm",
   target: "esnext",
   platform: "browser",
 })
   .then(() => {
-    const successMsg = "🔥 QuickSnap build successfull!";
+    const successMsg = "🔥 QuickSnap build successful!";
     console.log(successMsg);
     catchBuildLog(successMsg);
   })
   .catch((error) => {
-    const errorMsg = `❌ QuickSnap failed:, ${error}`;
+    const errorMsg = `❌ QuickSnap build failed: ${error}`;
     console.error(errorMsg);
     catchBuildLog(errorMsg);
     process.exit(1);

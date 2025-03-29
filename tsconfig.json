@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "outDir": "dist",
     "declaration": true,
-    "outDir": "types",
-    "strict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node"
+    "declarationDir": "dist",
+    "emitDeclarationOnly": true,
+    "moduleResolution": "node",
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true
   },
-  "include": ["src"]
+  "include": ["src"] // Compile all TypeScript files in src/
 }
