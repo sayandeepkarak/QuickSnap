@@ -3,3 +3,5 @@ package-lock.json
 dist/
 types/
 build.log
+*.txt
+*.html
