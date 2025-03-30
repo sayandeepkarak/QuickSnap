@@ -6,6 +6,7 @@ const { height, width } = DEFAULT_ATTRS;
 class QuickSnap extends HTMLElement {
   // Elements & Instances
   private videoElement: HTMLVideoElement;
+  private overlayElement: HTMLDivElement;
   private webcam: QuickSnapCam = new QuickSnapCam();
 
   // Attributes
@@ -30,8 +31,32 @@ class QuickSnap extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    // Create container
+    const container = document.createElement("div");
+    container.style.position = "relative";
+    container.style.display = "inline-block";
+
+    // Create video element
     this.videoElement = document.createElement("video");
-    this.shadowRoot!.append(this.videoElement);
+    this.videoElement.style.height = "max-content";
+    this.videoElement.setAttribute("autoplay", "true");
+    this.videoElement.setAttribute("playsinline", "true");
+
+    // Create overlay text
+    this.overlayElement = document.createElement("div");
+    this.overlayElement.style.position = "absolute";
+    this.overlayElement.style.top = "50%";
+    this.overlayElement.style.left = "50%";
+    this.overlayElement.style.transform = "translate(-50%, -50%)";
+    this.overlayElement.style.color = "#808080a3";
+    this.overlayElement.style.fontSize = "16px";
+    this.overlayElement.style.fontWeight = "bold";
+    this.overlayElement.style.pointerEvents = "none";
+
+    // Append elements
+    container.appendChild(this.videoElement);
+    container.appendChild(this.overlayElement);
+    this.shadowRoot!.append(container);
   }
 
   // Lifecycles and methods
@@ -56,11 +81,41 @@ class QuickSnap extends HTMLElement {
   }
 
   private async setStreamAndWatch() {
-    const stream: MediaStream | null = await this.webcam.askAndGetStream();
     this.webcam.watchPermission((permission: PermissionState) => {
-      if (permission === "prompt") this.setStreamAndWatch();
+      const willPlay = permission === "granted";
+      this.playOrPauseStream(willPlay);
+      if (willPlay) {
+        this.showOverlay(false);
+      } else {
+        this.showOverlay(
+          true,
+          permission === "denied" ? "Permission denied" : "Permission required"
+        );
+      }
     });
-    this.videoElement.srcObject = stream;
+
+    this.playOrPauseStream(true);
+  }
+
+  private async playOrPauseStream(play: boolean) {
+    if (play) {
+      const stream: MediaStream | null = await this.webcam.askAndGetStream();
+      if (!stream?.active) return;
+      this.videoElement.srcObject = stream;
+      this.videoElement.play();
+    } else {
+      const stream = this.videoElement.srcObject as MediaStream | null;
+      if (stream?.active) {
+        stream.getTracks().forEach((track) => track.stop());
+        this.videoElement.srcObject = null;
+      }
+      this.videoElement.pause();
+    }
+  }
+
+  private showOverlay(show: boolean, text?: string) {
+    this.overlayElement.style.display = show ? "inline-block" : "none";
+    this.overlayElement.innerText = text ?? "";
   }
 }
 

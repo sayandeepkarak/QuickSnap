@@ -7,7 +7,10 @@ export class QuickSnapCam implements QuickSnapCamDefinations {
 
   public async askAndGetStream(): Promise<MediaStream | null> {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false,
+      });
       this.permission = "granted";
       return stream;
     } catch {
