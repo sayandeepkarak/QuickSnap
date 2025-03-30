@@ -1,7 +1,7 @@
 import { DEFAULT_ATTRS } from "./types/config";
 import { QuickSnapCam } from "./utils/QuickSnapCam";
 
-const { height, width } = DEFAULT_ATTRS;
+const { height, width, autoStart } = DEFAULT_ATTRS;
 
 class QuickSnap extends HTMLElement {
   // Elements & Instances
@@ -10,22 +10,33 @@ class QuickSnap extends HTMLElement {
   private webcam: QuickSnapCam = new QuickSnapCam();
 
   // Attributes
-  static observedAttributes = [height.key, width.key];
+  static observedAttributes = [height.key, width.key, autoStart.key];
 
-  get width() {
-    return Number(this.getAttribute("width")) || 640;
+  get width(): number {
+    return Number(this.getAttribute(width.key)) || 640;
   }
 
   set width(value: number) {
-    this.setAttribute("width", value.toString());
+    this.setAttribute(width.key, value.toString());
   }
 
-  get height() {
-    return Number(this.getAttribute("height")) || 480;
+  get height(): number {
+    return Number(this.getAttribute(height.key)) || 480;
   }
 
   set height(value: number) {
-    this.setAttribute("height", value.toString());
+    this.setAttribute(height.key, value.toString());
+  }
+
+  get autoStart(): boolean {
+    if (!this.hasAttribute(autoStart.key)) {
+      return autoStart.default;
+    }
+    return Boolean(this.getAttribute(autoStart.key) === "true");
+  }
+
+  set autoStart(value: boolean) {
+    this.setAttribute(autoStart.key, value.toString());
   }
 
   constructor() {
@@ -93,29 +104,50 @@ class QuickSnap extends HTMLElement {
         );
       }
     });
-
-    this.playOrPauseStream(true);
+    this.playOrPauseStream(true, this.autoStart);
   }
 
-  private async playOrPauseStream(play: boolean) {
-    if (play) {
-      const stream: MediaStream | null = await this.webcam.askAndGetStream();
-      if (!stream?.active) return;
-      this.videoElement.srcObject = stream;
-      this.videoElement.play();
+  private async playOrPauseStream(play: boolean, autoPlay: boolean = true) {
+    if (play && autoPlay) {
+      this.start();
     } else {
-      const stream = this.videoElement.srcObject as MediaStream | null;
-      if (stream?.active) {
-        stream.getTracks().forEach((track) => track.stop());
-        this.videoElement.srcObject = null;
-      }
-      this.videoElement.pause();
+      this.stop();
     }
   }
 
   private showOverlay(show: boolean, text?: string) {
     this.overlayElement.style.display = show ? "inline-block" : "none";
     this.overlayElement.innerText = text ?? "";
+  }
+
+  public start(): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      this.stop();
+      const stream: MediaStream | null = await this.webcam.askAndGetStream();
+      if (!stream?.active) return;
+      this.videoElement.srcObject = stream;
+      this.videoElement.onloadedmetadata = () => {
+        this.videoElement.play();
+        resolve(true);
+      };
+    });
+  }
+
+  public pause() {
+    this.videoElement.pause();
+  }
+
+  public resume() {
+    this.videoElement.play();
+  }
+
+  public stop() {
+    const stream = this.videoElement.srcObject as MediaStream | null;
+    if (stream?.active) {
+      stream.getTracks().forEach((track) => track.stop());
+      this.videoElement.srcObject = null;
+    }
+    this.videoElement.pause();
   }
 }
 

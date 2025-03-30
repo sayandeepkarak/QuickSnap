@@ -12,7 +12,7 @@ export const DEFAULT_ATTRS: QuickSnapAttributes = {
   },
   autoStart: {
     key: "auto-start",
-    default: false,
+    default: true,
   },
   format: {
     key: "format",
