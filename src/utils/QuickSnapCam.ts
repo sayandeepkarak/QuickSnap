@@ -49,7 +49,6 @@ export class QuickSnapCam implements QuickSnapCamDefinations {
         "change",
         this.permissionChangeHandler
       );
-      callback(this.currentStatus.state);
     } catch {
       this.permission = "denied";
       callback(this.permission);
