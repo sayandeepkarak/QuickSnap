@@ -314,7 +314,9 @@ class QuickSnap extends HTMLElement {
 }
 
 function registerQuickSnap() {
-  customElements.define("quick-snap", QuickSnap);
+  if (!customElements.get("quick-snap")) {
+    customElements.define("quick-snap", QuickSnap);
+  }
 }
 
 export { registerQuickSnap };

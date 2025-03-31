@@ -1,7 +1,7 @@
 {
   "name": "quicksnap",
   "version": "1.0.0",
-  "description": "A lightweight webcam web component for snapshots",
+  "description": "QuickSnap is a lightweight, optimized Web Component for seamlessly integrating webcam access into JavaScript applications. It provides an efficient way to capture snapshots with a minimal yet powerful feature set, ensuring a smooth user experience.",
   "type": "module",
   "main": "dist/index.min.cjs",
   "module": "dist/index.min.mjs",
