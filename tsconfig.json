@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "types",
     "declaration": true,
-    "declarationDir": "dist",
-    "emitDeclarationOnly": true,
+    "declarationDir": "types",
     "moduleResolution": "node",
     "target": "esnext",
     "module": "esnext",
     "strict": true
   },
-  "include": ["src"] // Compile all TypeScript files in src/
+  "include": ["src"]
 }
