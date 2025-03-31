@@ -1,4 +1,4 @@
-import type { QuickSnapCamDefinations } from "../types/types";
+import type { QuickSnapCamDefinations } from "./types/types";
 
 export class QuickSnapCam implements QuickSnapCamDefinations {
   // Stores the current webcam permission state: "granted", "denied", or "prompt"
