@@ -17,16 +17,25 @@
     "clean": "rimraf dist && rimraf types"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^12.0.1",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "esbuild": "^0.25.1",
     "eslint": "^9.23.0",
     "rimraf": "^6.0.1",
+    "semantic-release": "^24.2.3",
     "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=16"
   },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "author": "Sayandeep Karak",
   "license": "MIT"
 }
