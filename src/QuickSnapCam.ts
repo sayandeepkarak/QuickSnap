@@ -17,7 +17,8 @@ export class QuickSnapCam implements QuickSnapCamDefinations {
 
       this.permission = "granted";
       return stream;
-    } catch {
+    } catch (error) {
+      console.error(`QuickSnap Error: ${error}`);
       this.permission = "denied";
       return null;
     }
@@ -29,20 +30,23 @@ export class QuickSnapCam implements QuickSnapCamDefinations {
       if (this.currentStatus) {
         this.currentStatus.onchange = null;
       }
-
-      this.currentStatus = await navigator.permissions.query({
-        name: "camera",
-      });
-
+      this.currentStatus = await this.fetchPermissionStatus();
       this.currentStatus.onchange = () => {
         if (this.currentStatus) {
           this.permission = this.currentStatus.state;
           callback(this.permission);
         }
       };
-    } catch {
+    } catch (error) {
+      console.error(`QuickSnap Error: ${error}`);
       this.permission = "denied";
       callback(this.permission);
     }
+  }
+
+  public async fetchPermissionStatus(): Promise<PermissionStatus> {
+    return await navigator.permissions.query({
+      name: "camera",
+    });
   }
 }

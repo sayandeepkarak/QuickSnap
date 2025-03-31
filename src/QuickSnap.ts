@@ -135,7 +135,7 @@ class QuickSnap extends HTMLElement {
   // Emits an "error" event when an error occurs
   private onError(errorMessage: string) {
     console.error(`QuickSnap Error: ${errorMessage}`);
-    this.dispatchCustomEvent("error", { message: errorMessage });
+    this.dispatchCustomEvent("quicksnapError", { message: errorMessage });
   }
 
   // Emits a "permissionStateUpdate" event when permission state is updated
@@ -292,11 +292,23 @@ class QuickSnap extends HTMLElement {
         a.click();
         this.containerElement.removeChild(a);
         URL.revokeObjectURL(blobUrl);
-      } catch {
+      } catch (error) {
+        console.error(`QuickSnap Error: ${error}`);
         this.onError("Failed to capture and download snapshot.");
       }
     } else {
       this.onError("No snapshot available for download.");
+    }
+  }
+
+  public async checkPermissions(): Promise<PermissionState | null> {
+    try {
+      const status = await this.webcam.fetchPermissionStatus();
+      return status.state;
+    } catch (error) {
+      console.error(`QuickSnap Error: ${error}`);
+      this.onError("Failed to check camera permission status");
+      return null;
     }
   }
 }
