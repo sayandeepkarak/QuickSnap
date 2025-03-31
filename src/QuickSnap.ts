@@ -4,9 +4,9 @@ import { QuickSnapCam } from "./QuickSnapCam";
 const { height, width, autoStart, format } = DEFAULT_ATTRS;
 
 class QuickSnap extends HTMLElement {
-  private containerElement: HTMLDivElement;
-  private videoElement: HTMLVideoElement;
-  private overlayElement: HTMLDivElement;
+  public containerElement: HTMLDivElement;
+  public videoElement: HTMLVideoElement;
+  public overlayElement: HTMLDivElement;
   private webcam: QuickSnapCam = new QuickSnapCam();
 
   constructor() {
@@ -16,10 +16,11 @@ class QuickSnap extends HTMLElement {
     this.containerElement = document.createElement("div");
     this.containerElement.style.position = "relative";
     this.containerElement.style.display = "inline-block";
+    this.containerElement.style.maxWidth = "100%";
 
     this.videoElement = document.createElement("video");
     this.videoElement.style.height = "max-content";
-    this.videoElement.setAttribute("autoplay", "true");
+    this.videoElement.style.maxWidth = "100%";
     this.videoElement.setAttribute("playsinline", "true");
 
     this.overlayElement = document.createElement("div");
