@@ -1,2 +1,2 @@
-import QuickSnap from "./QuickSnap";
-export { QuickSnap };
+import { registerQuickSnap } from "./QuickSnap";
+registerQuickSnap();

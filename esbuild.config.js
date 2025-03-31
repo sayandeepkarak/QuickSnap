@@ -1,5 +1,5 @@
 import { build } from "esbuild";
-import { appendFileSync, rmSync } from "fs";
+import { appendFileSync } from "fs";
 
 const LOG_FILE = "build.log";
 
@@ -8,25 +8,37 @@ const catchBuildLog = (message) => {
   appendFileSync(LOG_FILE, `[${timestamp}] ${message}\n`);
 };
 
-rmSync("dist", { recursive: true, force: true });
+function runBuild(otherOptions) {
+  return build({
+    entryPoints: ["src/index.ts"],
+    bundle: true,
+    minify: true,
+    keepNames: false,
+    sourcemap: false,
+    target: "esnext",
+    platform: "node",
+    ...otherOptions,
+  });
+}
 
-build({
-  entryPoints: ["src/index.ts"],
-  outfile: "dist/QuickSnap.min.mjs",
-  bundle: true,
-  minify: true,
-  sourcemap: false,
-  format: "esm",
-  target: "esnext",
-  platform: "browser",
-})
+// Build ESM & CJS
+Promise.all([
+  runBuild({
+    outfile: "dist/index.min.mjs",
+    format: "esm",
+  }),
+  runBuild({
+    outfile: "dist/index.min.cjs",
+    format: "cjs",
+  }),
+])
   .then(() => {
-    const successMsg = "🔥 QuickSnap build successfull!";
+    const successMsg = "🔥 QuickSnap build successful!";
     console.log(successMsg);
     catchBuildLog(successMsg);
   })
   .catch((error) => {
-    const errorMsg = `❌ QuickSnap failed:, ${error}`;
+    const errorMsg = `❌ QuickSnap build failed: ${error}`;
     console.error(errorMsg);
     catchBuildLog(errorMsg);
     process.exit(1);

@@ -14,15 +14,18 @@ export default [
     },
     rules: {
       ...eslintPluginTs.configs.recommended.rules,
-
-      // Custom rules (only necessary ones)
       "@typescript-eslint/no-unused-vars": [
         "error",
         { argsIgnorePattern: "^_" },
       ],
       "@typescript-eslint/consistent-type-imports": "error",
-      "no-console": "warn",
       "no-debugger": "error",
+      "no-console": [
+        "error",
+        {
+          allow: ["warn", "error"],
+        },
+      ],
     },
   },
 ];

@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "declaration": true,
     "outDir": "types",
-    "strict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node"
+    "declaration": true,
+    "declarationDir": "types",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true
   },
   "include": ["src"]
 }
