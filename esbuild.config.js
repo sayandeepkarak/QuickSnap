@@ -17,7 +17,7 @@ build({
   sourcemap: false,
   format: "esm",
   target: "esnext",
-  platform: "browser",
+  platform: "node",
 })
   .then(() => {
     const successMsg = "🔥 QuickSnap build successful!";

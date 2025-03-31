@@ -23,7 +23,7 @@ export default [
       "no-console": [
         "error",
         {
-          allow: ["warn"], // Only allow console.warn, disallow everything else
+          allow: ["warn", "error"],
         },
       ],
     },
