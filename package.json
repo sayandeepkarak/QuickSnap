@@ -1,5 +1,7 @@
 {
   "name": "quicksnap",
+  "author": "Sayandeep Karak <sayandeepkarak.official@gmail.com>",
+  "license": "MIT",
   "version": "1.0.0",
   "description": "QuickSnap is a lightweight, optimized Web Component for seamlessly integrating webcam access into JavaScript applications. It provides an efficient way to capture snapshots with a minimal yet powerful feature set, ensuring a smooth user experience.",
   "type": "module",
@@ -9,6 +11,14 @@
     "require": "./dist/index.min.cjs",
     "import": "./dist/index.min.mjs"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sayandeepkarak/QuickSnap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sayandeepkarak/QuickSnap/issues"
+  },
+  "homepage": "https://github.com/sayandeepkarak/QuickSnap#readme",
   "scripts": {
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
@@ -36,6 +46,8 @@
     "README.md",
     "LICENSE"
   ],
-  "author": "Sayandeep Karak",
-  "license": "MIT"
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest"
+  }
 }
