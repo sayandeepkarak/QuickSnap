@@ -1,7 +1,8 @@
 export enum Format {
-  png,
-  jpeg,
-  webp,
+  "image/png" = "image/png",
+  "image/jpeg" = "image/jpeg",
+  "image/webp" = "image/webp",
+  "image/bmp" = "image/bmp",
 }
 
 export enum CameraMode {
@@ -18,6 +19,7 @@ export enum Resolution {
 export type QuickSnapAttributeDefinition<T> = {
   key: string;
   default: T;
+  validate: (value: unknown) => T;
 };
 
 export type QuickSnapAttributes = {
@@ -25,8 +27,8 @@ export type QuickSnapAttributes = {
   height: QuickSnapAttributeDefinition<number>;
   autoStart: QuickSnapAttributeDefinition<boolean>;
   format: QuickSnapAttributeDefinition<Format>;
-  cameraMode: QuickSnapAttributeDefinition<CameraMode>;
-  resolution: QuickSnapAttributeDefinition<Resolution>;
+  // cameraMode: QuickSnapAttributeDefinition<CameraMode>;
+  // resolution: QuickSnapAttributeDefinition<Resolution>;
 };
 
 export interface QuickSnapCamDefinations {
