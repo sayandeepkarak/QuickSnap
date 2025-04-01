@@ -49,5 +49,26 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "tag": "latest"
-  }
+  },
+  "keywords": [
+    "quicksnap",
+    "webcam",
+    "snapshot",
+    "image-capture",
+    "camera",
+    "web-component",
+    "javascript",
+    "typescript",
+    "frontend",
+    "vue",
+    "react",
+    "angular",
+    "npm-package",
+    "react-webcam",
+    "vue-webcam",
+    "webcam-capture",
+    "camera-capture",
+    "profile-picture",
+    "face-detection"
+  ]
 }
