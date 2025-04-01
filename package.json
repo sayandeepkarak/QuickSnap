@@ -69,5 +69,6 @@
     "camera-capture",
     "profile-picture",
     "face-detection"
-  ]
+  ],
+  "version": "1.0.0"
 }
