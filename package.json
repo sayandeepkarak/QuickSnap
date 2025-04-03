@@ -49,7 +49,8 @@
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "tag": "latest"
+    "tag": "latest",
+    "access": "public"
   },
   "keywords": [
     "quicksnap",
@@ -73,6 +74,5 @@
     "face-detection",
     "angular-webcam",
     "javascript-webcam"
-  ],
-  "version": "1.0.0"
+  ]
 }
