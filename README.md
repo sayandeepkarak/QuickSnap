@@ -1,31 +1,35 @@
-# **QuickSnap**
+# **QuickSnap** – A Lightweight & Optimized Webcam Web Component
 
-QuickSnap is a lightweight, optimized **Web Component** for seamlessly integrating webcam access into JavaScript applications. It provides an efficient way to capture snapshots with a minimal yet powerful feature set, ensuring a smooth user experience.
-
-## **Features**
-
-✅ **Simple & Lightweight** – Easily integrate a webcam with a single Web Component.  
-⚡ **Optimized Performance** – Minimal resource consumption with efficient handling.  
-🛠️ **Permission Handling** – Automatic camera permission management.  
-🎨 **Customizable** – Control width, height, format, and auto-start behavior.  
-🔄 **Cross-Framework Support** – Works in any JavaScript environment.  
-🚀 **Future-Ready** – AI-based face detection (coming soon).
+QuickSnap is a high-performance **Web Component** designed for seamless webcam integration in JavaScript applications. With an intuitive API, automatic permission handling, and cross-framework compatibility, QuickSnap offers a simple yet powerful way to capture user snapshots effortlessly.
 
 ---
 
-## **Installation**
+## **✨ Features**
 
-Install via npm:
+✅ **Lightweight & Minimal** – Integrate a webcam with just a single Web Component.  
+⚡ **Optimized Performance** – Efficient resource handling for smooth operation.  
+🛠️ **Automatic Permission Handling** – Hassle-free user camera access.  
+🎨 **Highly Customizable** – Control dimensions, formats, and auto-start settings.  
+🔄 **Cross-Framework Compatibility** – Works seamlessly in React, Vue, Angular, and vanilla JavaScript.  
+🚀 **Future-Ready** – AI-based face detection support (coming soon).
+
+---
+
+## **📦 Installation**
+
+Install via **npm**:
 
 ```sh
 npm install quicksnap
 ```
 
+Or include it via **CDN** (coming soon).
+
 ---
 
-## **Usage**
+## **🚀 Usage**
 
-### **Basic Usage (HTML & JavaScript)**
+### **Basic Implementation (HTML & JavaScript)**
 
 ```html
 <!DOCTYPE html>
@@ -39,7 +43,7 @@ npm install quicksnap
     <quick-snap
       width="640"
       height="480"
-      autostart
+      autostart="true"
       format="image/png"
     ></quick-snap>
   </body>
@@ -48,46 +52,46 @@ npm install quicksnap
 
 ---
 
-## **Attributes**
+## **⚙️ Attributes**
 
-| Attribute   | Type    | Default     | Description                                                         |
-| ----------- | ------- | ----------- | ------------------------------------------------------------------- |
-| `width`     | Number  | `640`       | Camera width in pixels                                              |
-| `height`    | Number  | `480`       | Camera height in pixels                                             |
-| `autostart` | Boolean | `true`      | Automatically start the camera when loaded                          |
-| `format`    | String  | `image/png` | Image format (`image/png`, `image/jpeg`, `image/webp`, `image/bmp`) |
-
----
-
-## **Events**
-
-| Event Name              | Description                                      |
-| ----------------------- | ------------------------------------------------ |
-| `ready`                 | Fires when QuickSnap is ready to use.            |
-| `capture`               | Fires when a snapshot is taken (returns a Blob). |
-| `quicksnapError`        | Fires when an error occurs.                      |
-| `permissionStateUpdate` | Fires when camera permission state changes.      |
+| Attribute   | Type    | Default     | Description                                                       |
+| ----------- | ------- | ----------- | ----------------------------------------------------------------- |
+| `width`     | Number  | `640`       | Sets the webcam width (in pixels).                                |
+| `height`    | Number  | `480`       | Sets the webcam height (in pixels).                               |
+| `autostart` | Boolean | `true`      | Automatically starts the webcam on load.                          |
+| `format`    | String  | `image/png` | Specifies image format (`image/png`, `image/jpeg`, `image/webp`). |
 
 ---
 
-## **Methods**
+## **📡 Events**
 
-| Method                         | Description                                |
-| ------------------------------ | ------------------------------------------ |
-| `start()`                      | Starts the camera stream.                  |
-| `pause()`                      | Pauses the camera stream.                  |
-| `resume()`                     | Resumes a paused camera stream.            |
-| `stop()`                       | Stops the camera stream.                   |
-| `capture()`                    | Captures an image and returns a Blob.      |
-| `captureAndDownload(filename)` | Captures an image and triggers a download. |
-| `checkPermissions()`           | Checks camera permission status.           |
+| Event Name              | Description                                          |
+| ----------------------- | ---------------------------------------------------- |
+| `ready`                 | Fired when QuickSnap is initialized and ready.       |
+| `capture`               | Triggered when a snapshot is taken (returns a Blob). |
+| `quicksnapError`        | Dispatched when an error occurs.                     |
+| `permissionStateUpdate` | Fired when camera permission status changes.         |
 
 ---
 
-## **License**
+## **🛠️ Methods**
 
-This project is licensed under the **MIT License**.
+| Method                         | Description                                  |
+| ------------------------------ | -------------------------------------------- |
+| `start()`                      | Starts the webcam stream.                    |
+| `pause()`                      | Pauses the webcam stream.                    |
+| `resume()`                     | Resumes a paused webcam stream.              |
+| `stop()`                       | Stops the webcam stream.                     |
+| `capture()`                    | Captures an image and returns a Blob.        |
+| `captureAndDownload(filename)` | Captures an image and downloads it.          |
+| `checkPermissions()`           | Checks the current camera permission status. |
 
 ---
 
-🚀 **QuickSnap – A Simple & Efficient Webcam Web Component**
+## **🛡️ License**
+
+This project is open-source and licensed under the **MIT License**.
+
+---
+
+💡 **QuickSnap – A Simple, Efficient, and Future-Ready Webcam Component.** 🚀
