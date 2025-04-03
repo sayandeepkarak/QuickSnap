@@ -43,7 +43,8 @@
   "files": [
     "dist/",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "package.json"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -68,7 +69,9 @@
     "webcam-capture",
     "camera-capture",
     "profile-picture",
-    "face-detection"
+    "face-detection",
+    "angular-webcam",
+    "javascript-webcam"
   ],
   "version": "1.0.0"
 }
