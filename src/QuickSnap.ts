@@ -210,9 +210,13 @@ class QuickSnap extends HTMLElement {
       }
 
       this.videoElement.srcObject = stream;
-      this.videoElement.onloadedmetadata = () => {
+      this.videoElement.onloadeddata = () => {
+        const { HAVE_CURRENT_DATA, HAVE_ENOUGH_DATA, HAVE_FUTURE_DATA } =
+          HTMLMediaElement;
         if (
-          this.videoElement.readyState === HTMLMediaElement.HAVE_CURRENT_DATA
+          [HAVE_CURRENT_DATA, HAVE_ENOUGH_DATA, HAVE_FUTURE_DATA]?.includes(
+            this.videoElement.readyState as 2 | 3 | 4
+          )
         ) {
           this.videoElement.play();
           this.onReady();
