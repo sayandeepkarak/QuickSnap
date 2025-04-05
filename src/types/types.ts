@@ -33,7 +33,10 @@ export type QuickSnapAttributes = {
 
 export interface QuickSnapCamDefinations {
   permission: PermissionState;
-  askAndGetStream: () => Promise<MediaStream | null>;
+  askAndGetStream: (
+    height: number,
+    width: number
+  ) => Promise<MediaStream | null>;
   watchPermission: (
     callback: (state: PermissionState) => void
   ) => Promise<void>;
