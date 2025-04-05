@@ -8,13 +8,28 @@ export class QuickSnapCam implements QuickSnapCamDefinations {
   private currentStatus: PermissionStatus | null = null;
 
   // Requests access to the user's webcam and returns the media stream if granted
-  public async askAndGetStream(): Promise<MediaStream | null> {
+  public async askAndGetStream(
+    height: number,
+    width: number,
+    deviceId: string = ""
+  ): Promise<MediaStream | null> {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: {
+          width: {
+            min: 320,
+            ideal: width,
+            max: 1920,
+          },
+          height: {
+            min: 240,
+            ideal: height,
+            max: 1080,
+          },
+          deviceId,
+        },
         audio: false,
       });
-
       this.permission = "granted";
       return stream;
     } catch (error) {

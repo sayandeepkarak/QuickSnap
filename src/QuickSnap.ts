@@ -1,7 +1,7 @@
 import { DEFAULT_ATTRS } from "./types/config";
 import { QuickSnapCam } from "./QuickSnapCam";
 
-const { height, width, autoStart, format } = DEFAULT_ATTRS;
+const { height, width, autoStart, format, mediaDeviceId } = DEFAULT_ATTRS;
 
 class QuickSnap extends HTMLElement {
   public containerElement: HTMLDivElement;
@@ -19,7 +19,7 @@ class QuickSnap extends HTMLElement {
     this.containerElement.style.maxWidth = "100%";
 
     this.videoElement = document.createElement("video");
-    this.videoElement.style.height = "max-content";
+    this.videoElement.style.height = "100%";
     this.videoElement.style.maxWidth = "100%";
     this.videoElement.setAttribute("playsinline", "true");
 
@@ -43,6 +43,7 @@ class QuickSnap extends HTMLElement {
     width.key,
     autoStart.key,
     format.key,
+    mediaDeviceId.key,
   ];
 
   get width(): number {
@@ -52,6 +53,7 @@ class QuickSnap extends HTMLElement {
 
   set width(value: number) {
     this.setAttribute(width.key, width.validate(value).toString());
+    this.start(true);
   }
 
   get height(): number {
@@ -61,6 +63,7 @@ class QuickSnap extends HTMLElement {
 
   set height(value: number) {
     this.setAttribute(height.key, width.validate(value).toString());
+    this.start(true);
   }
 
   get format(): string {
@@ -81,29 +84,22 @@ class QuickSnap extends HTMLElement {
     this.setAttribute(autoStart.key, autoStart.validate(value).toString());
   }
 
+  get mediaDeviceId(): string {
+    if (!this.hasAttribute(mediaDeviceId.key)) return mediaDeviceId.default;
+    return mediaDeviceId.validate(this.getAttribute(mediaDeviceId.key));
+  }
+
+  set mediaDeviceId(value: string) {
+    this.setAttribute(
+      mediaDeviceId.key,
+      mediaDeviceId.validate(value).toString()
+    );
+    this.start(true);
+  }
+
   // Lifecycle method when component is added to the DOM
   connectedCallback() {
-    this.applyAttributes();
     this.setStreamAndWatch();
-  }
-
-  // Lifecycle method when observed attributes change
-  attributeChangedCallback(
-    _: string,
-    oldValue: string | null,
-    newValue: string | null
-  ) {
-    if (oldValue !== newValue) {
-      this.applyAttributes();
-    }
-  }
-
-  // Updates video element attributes based on observed values
-  private applyAttributes() {
-    this.videoElement.width = this.width;
-    this.videoElement.height = this.height;
-    this.autoStart = this.autoStart;
-    this.format = this.format;
   }
 
   // Dispatches a custom event with a given name and details
@@ -184,15 +180,19 @@ class QuickSnap extends HTMLElement {
   }
 
   // Starts the webcam stream
-  public start(): Promise<boolean> {
+  public start(restart = false): Promise<boolean> {
     return new Promise(async (resolve) => {
-      if (!this.videoElement.paused) {
+      if (!this.videoElement.paused && !restart) {
         return resolve(true);
       }
 
       this.stop();
 
-      const stream: MediaStream | null = await this.webcam.askAndGetStream();
+      const stream: MediaStream | null = await this.webcam.askAndGetStream(
+        this.height,
+        this.width,
+        this.mediaDeviceId
+      );
       this.onPermissionStateUpdate();
       if (!stream?.active) {
         this.showOverlay(
@@ -305,6 +305,7 @@ class QuickSnap extends HTMLElement {
     }
   }
 
+  // Returns current permissions set by the user
   public async checkPermissions(): Promise<PermissionState | null> {
     try {
       const status = await this.webcam.fetchPermissionStatus();
@@ -314,6 +315,15 @@ class QuickSnap extends HTMLElement {
       this.onError("Failed to check camera permission status");
       return null;
     }
+  }
+
+  // Returs all available video inputs
+  public async getAvailableCameras(): Promise<MediaDeviceInfo[]> {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const videoInputs = devices.filter(
+      (device) => device.kind === "videoinput"
+    );
+    return videoInputs;
   }
 }
 
