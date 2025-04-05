@@ -83,28 +83,24 @@ class QuickSnap extends HTMLElement {
 
   // Lifecycle method when component is added to the DOM
   connectedCallback() {
-    this.applyAttributes();
     this.setStreamAndWatch();
   }
 
   // Lifecycle method when observed attributes change
   attributeChangedCallback(
-    _: string,
+    attributeName: string,
     oldValue: string | null,
     newValue: string | null
   ) {
     if (oldValue !== newValue) {
-      this.applyAttributes();
+      if ([height.key, width.key].includes(attributeName)) {
+        this.start(true);
+      }
     }
   }
 
-  // Updates video element attributes based on observed values
-  private applyAttributes() {
-    this.videoElement.width = this.width;
-    this.videoElement.height = this.height;
-    this.autoStart = this.autoStart;
-    this.format = this.format;
-  }
+  // Updates
+  // private applyAttributes() {}
 
   // Dispatches a custom event with a given name and details
   private dispatchCustomEvent(eventName: string, details: object) {
@@ -184,15 +180,18 @@ class QuickSnap extends HTMLElement {
   }
 
   // Starts the webcam stream
-  public start(): Promise<boolean> {
+  public start(restart = false): Promise<boolean> {
     return new Promise(async (resolve) => {
-      if (!this.videoElement.paused) {
+      if (!this.videoElement.paused && !restart) {
         return resolve(true);
       }
 
       this.stop();
 
-      const stream: MediaStream | null = await this.webcam.askAndGetStream();
+      const stream: MediaStream | null = await this.webcam.askAndGetStream(
+        this.height,
+        this.width
+      );
       this.onPermissionStateUpdate();
       if (!stream?.active) {
         this.showOverlay(
