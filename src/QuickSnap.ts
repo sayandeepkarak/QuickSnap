@@ -305,6 +305,7 @@ class QuickSnap extends HTMLElement {
     }
   }
 
+  // Returns current permissions set by the user
   public async checkPermissions(): Promise<PermissionState | null> {
     try {
       const status = await this.webcam.fetchPermissionStatus();
@@ -316,6 +317,7 @@ class QuickSnap extends HTMLElement {
     }
   }
 
+  // Returs all available video inputs
   public async getAvailableCameras(): Promise<MediaDeviceInfo[]> {
     const devices = await navigator.mediaDevices.enumerateDevices();
     const videoInputs = devices.filter(
