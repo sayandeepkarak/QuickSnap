@@ -10,7 +10,8 @@ export class QuickSnapCam implements QuickSnapCamDefinations {
   // Requests access to the user's webcam and returns the media stream if granted
   public async askAndGetStream(
     height: number,
-    width: number
+    width: number,
+    deviceId: string = ""
   ): Promise<MediaStream | null> {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -25,6 +26,7 @@ export class QuickSnapCam implements QuickSnapCamDefinations {
             ideal: height,
             max: 1080,
           },
+          deviceId,
         },
         audio: false,
       });
