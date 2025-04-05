@@ -61,3 +61,19 @@ export function validateEnum<T extends Record<string, string>>(
 
   return defaultValue;
 }
+
+export function validateString(
+  value: unknown,
+  fieldName: string,
+  defaultValue: string
+): string {
+  if (typeof value === "string" && value.trim().length > 0) {
+    return value.trim();
+  }
+
+  console.warn(
+    `⚠️ Warning: Invalid ${fieldName}. Expected a non-empty string, but received "${value}". Using default: "${defaultValue}".`
+  );
+
+  return defaultValue;
+}

@@ -2,6 +2,7 @@ import {
   validateBoolean,
   validateEnum,
   validateNumber,
+  validateString,
 } from "../utils/validation";
 import { Format } from "./types";
 import type { QuickSnapAttributes } from "./types";
@@ -11,8 +12,7 @@ enum attrKeys {
   HEIGHT = "height",
   AUTO_START = "autostart",
   FORMAT = "format",
-  CAMERA_MODE = "camera-mode",
-  RESOLUTION = "resolution",
+  MEDIA_DEVICE_ID = "mediaDeviceId",
 }
 
 export const DEFAULT_ATTRS: QuickSnapAttributes = {
@@ -44,12 +44,11 @@ export const DEFAULT_ATTRS: QuickSnapAttributes = {
       return validateEnum(value, attrKeys.FORMAT, Format, Format["image/png"]);
     },
   },
-  // cameraMode: {
-  //   key: attrKeys.CAMERA_MODE,
-  //   default: CameraMode.front,
-  // },
-  // resolution: {
-  //   key: attrKeys.RESOLUTION,
-  //   default: Resolution["720p"],
-  // },
+  mediaDeviceId: {
+    key: attrKeys.MEDIA_DEVICE_ID,
+    default: "",
+    validate: (value: unknown) => {
+      return validateString(value, attrKeys.MEDIA_DEVICE_ID, "");
+    },
+  },
 };

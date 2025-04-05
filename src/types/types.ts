@@ -27,15 +27,15 @@ export type QuickSnapAttributes = {
   height: QuickSnapAttributeDefinition<number>;
   autoStart: QuickSnapAttributeDefinition<boolean>;
   format: QuickSnapAttributeDefinition<Format>;
-  // cameraMode: QuickSnapAttributeDefinition<CameraMode>;
-  // resolution: QuickSnapAttributeDefinition<Resolution>;
+  mediaDeviceId: QuickSnapAttributeDefinition<string>;
 };
 
 export interface QuickSnapCamDefinations {
   permission: PermissionState;
   askAndGetStream: (
     height: number,
-    width: number
+    width: number,
+    deviceId: string
   ) => Promise<MediaStream | null>;
   watchPermission: (
     callback: (state: PermissionState) => void
