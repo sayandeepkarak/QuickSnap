@@ -207,8 +207,8 @@ class QuickSnap extends HTMLElement {
         this.width,
         this.mediaDeviceId
       );
-      this.onPermissionStateUpdate();
       if (!stream?.active) {
+        this.onPermissionStateUpdate();
         this.showOverlay(
           true,
           this.webcam.permission === "denied"
