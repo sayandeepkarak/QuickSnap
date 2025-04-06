@@ -102,6 +102,19 @@ class QuickSnap extends HTMLElement {
     this.setStreamAndWatch();
   }
 
+  // Atributechange callback
+  attributeChangedCallback(
+    attributeName: string,
+    oldValue: string | null,
+    newValue: string | null
+  ) {
+    if (oldValue !== newValue) {
+      if ([height.key, width.key, mediaDeviceId.key].includes(attributeName)) {
+        this.start(true);
+      }
+    }
+  }
+
   // Dispatches a custom event with a given name and details
   private dispatchCustomEvent(eventName: string, details: object) {
     this.dispatchEvent(
@@ -201,7 +214,7 @@ class QuickSnap extends HTMLElement {
             ? "Permission denied"
             : "Permission required"
         );
-        this.onError(
+        console.warn(
           `Camera access ${
             this.webcam.permission === "denied" ? "denied" : "required"
           }`
