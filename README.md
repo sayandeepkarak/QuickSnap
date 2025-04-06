@@ -1,24 +1,28 @@
-# **QuickSnap** – A Lightweight & Optimized Webcam Web Component
+---
 
-**QuickSnap** is a high-performance, standalone **Web Component** that provides seamless webcam access and user snapshot capture across **any JavaScript web platform** – including **React, Vue, Angular**, or vanilla JS.
+# **QuickSnap** – Lightweight Webcam Web Component
 
-✅ Built using **native Web Component APIs**, it works out of the box without framework wrappers.  
-✅ Ideal for onboarding flows, profile picture setups, camera utilities, and more.
+[![npm version](https://img.shields.io/npm/v/quicksnap.svg)](https://www.npmjs.com/package/quicksnap)
+[![npm downloads](https://img.shields.io/npm/dw/quicksnap.svg)](https://www.npmjs.com/package/quicksnap)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
+**QuickSnap** is a high-performance, framework-agnostic **Web Component** for accessing and capturing webcam snapshots. Designed for **React, Vue, Angular, Qwik**, and other modern JavaScript apps.
+
+✅ Native, dependency-free, and framework-compatible.  
+✅ Ideal for onboarding, profile picture capture, or camera utilities.
 
 ---
 
-## **🔧 Developer-Friendly Highlights**
+## **🚀 Features at a Glance**
 
-- ✅ Fully compatible with **React**, **Vue**, **Angular**, and **vanilla JavaScript**.
-- ✅ Seamless webcam start/stop with real-time **permission tracking**.
-- ✅ Dynamic attribute configuration via **JavaScript setters**.
-- ✅ Native support for image formats: `PNG`, `JPEG`, `WEBP`, `BMP`.
-- ✅ **Capture flicker effect** for a realistic photo experience.
-- ✅ Built-in overlays for **permission required** or **permission denied** states.
-- ✅ **Face detection and auto-cropping** (coming soon).
-- ✅ Easily bind to specific cameras via `media-device-id`.
-
-> **💡 Dev Note**: QuickSnap requires **no external UI library** and integrates into any app with a single tag and import.
+- 🎯 Seamless webcam start/stop with **real-time permission tracking**
+- 🧩 Works in **Vue**, **React**, **Angular**, **Qwik**, **Svelte**, and more
+- ⚡ Optimized for performance and minimal footprint
+- ✨ **Capture flicker effect** for realism
+- 🎥 Custom device binding with `media-device-id`
+- 📷 Supports `PNG`, `JPEG`, `WEBP`, and `BMP` formats
+- 🚧 Overlays for **permission denied** and **permission required**
+- 🧠 Face detection + auto-cropping _(coming soon)_
 
 ---
 
@@ -26,17 +30,13 @@
 
 ```bash
 npm install quicksnap
-```
-
-or
-
-```bash
+# or
 yarn add quicksnap
 ```
 
 ---
 
-## **🚀 Basic Usage (Minimal Full HTML)**
+## **🧪 Basic Usage Example**
 
 ```html
 <!DOCTYPE html>
@@ -55,23 +55,21 @@ yarn add quicksnap
 
     <script type="module">
       import "quicksnap";
+      const snap = document.querySelector("quick-snap");
 
-      const qs = document.querySelector("quick-snap");
-
-      qs.addEventListener("ready", (e) => {
-        console.log("Webcam ready", e.detail.message);
+      snap.addEventListener("ready", (e) => {
+        console.log("Webcam ready:", e.detail.message);
       });
 
       async function captureImage() {
-        const blob = await qs.capture();
+        const blob = await snap.capture();
         if (blob) {
-          console.log("Captured image", blob);
+          console.log("Image captured:", blob);
         }
       }
 
-      // Dynamic control
-      qs.width = 800;
-      qs.format = "image/jpeg";
+      snap.width = 800;
+      snap.format = "image/jpeg";
     </script>
   </body>
 </html>
@@ -79,33 +77,33 @@ yarn add quicksnap
 
 ---
 
-## **⚙️ Attributes & Configuration**
+## **⚙️ Attributes**
 
-| Attribute             | Type    | Default     | Description                                                                                |
-| --------------------- | ------- | ----------- | ------------------------------------------------------------------------------------------ |
-| `width`               | Number  | 640         | Webcam video width in pixels (min: 320, max: 1920).                                        |
-| `height`              | Number  | 480         | Webcam video height in pixels (min: 240, max: 1080).                                       |
-| `autostart`           | Boolean | true        | Automatically start webcam on init.                                                        |
-| `format`              | String  | "image/png" | Format for captured image. Supports: `image/png`, `image/jpeg`, `image/webp`, `image/bmp`. |
-| `media-device-id`     | String  | ""          | Bind to a specific video input device. Use `getAvailableCameras()` to list.                |
-| `enableFaceDetection` | Boolean | false       | Enables face detection with auto-cropping (coming soon).                                   |
+| Attribute             | Type    | Default   | Description                                                                                 |
+| --------------------- | ------- | --------- | ------------------------------------------------------------------------------------------- |
+| `width`               | Number  | 640       | Width of the webcam video (min: 320, max: 1920).                                            |
+| `height`              | Number  | 480       | Height of the webcam video (min: 240, max: 1080).                                           |
+| `autostart`           | Boolean | true      | Automatically starts the webcam on mount.                                                   |
+| `format`              | String  | image/png | Output format: `image/png`, `image/jpeg`, `image/webp`, or `image/bmp`.                     |
+| `media-device-id`     | String  | ""        | Target a specific video input device by device ID. Use `getAvailableCameras()` to list all. |
+| `enableFaceDetection` | Boolean | false     | Enables face detection with automatic cropping _(coming soon)_.                             |
 
-> **🛠 Dev Note**: All attributes can also be accessed or updated using **JavaScript getters/setters**.
+All attributes are also configurable via JavaScript using property accessors.
 
 ---
 
-## **🛠️ Methods**
+## **🧠 Methods**
 
-| Method                  | Parameters                                             | Returns                                      | Description                                                |
-| ----------------------- | ------------------------------------------------------ | -------------------------------------------- | ---------------------------------------------------------- |
-| `start()`               | `restart` (Boolean, default: false)                    | `Promise<boolean>`                           | Starts webcam. Use `restart: true` to reinitialize.        |
-| `pause()`               | –                                                      | `void`                                       | Pauses video playback.                                     |
-| `resume()`              | –                                                      | `void`                                       | Resumes video playback.                                    |
-| `stop()`                | –                                                      | `void`                                       | Stops webcam and releases resources.                       |
-| `capture()`             | –                                                      | `Promise<Blob \| null>`                      | Captures a frame. Returns `null` if stream is unavailable. |
-| `captureAndDownload()`  | `filename` (String, optional, default: "snapshot.png") | `Promise<void>`                              | Captures and downloads a snapshot.                         |
-| `checkPermissions()`    | –                                                      | `Promise<"granted" \| "denied" \| "prompt">` | Gets current camera permission status.                     |
-| `getAvailableCameras()` | –                                                      | `Promise<Array<MediaDeviceInfo>>`            | Lists all available video input devices.                   |
+| Method                                          | Returns                                      | Description                                                              |
+| ----------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
+| `start(restart = false)`                        | `Promise<boolean>`                           | Starts the webcam. Pass `true` to restart with reinitialization.         |
+| `pause()`                                       | `void`                                       | Pauses the current video stream without stopping it.                     |
+| `resume()`                                      | `void`                                       | Resumes a paused video stream.                                           |
+| `stop()`                                        | `void`                                       | Completely stops the video stream and releases the media device.         |
+| `capture()`                                     | `Promise<Blob \| null>`                      | Captures the current frame. Returns a `Blob` or `null` if capture fails. |
+| `captureAndDownload(filename = "snapshot.png")` | `Promise<void>`                              | Captures a frame and prompts download with optional filename.            |
+| `checkPermissions()`                            | `Promise<"granted" \| "denied" \| "prompt">` | Returns the current webcam permission status.                            |
+| `getAvailableCameras()`                         | `Promise<Array<MediaDeviceInfo>>`            | Lists all available video input devices.                                 |
 
 ---
 
@@ -113,21 +111,17 @@ yarn add quicksnap
 
 | Event Name              | Payload                                   | Description                                             |
 | ----------------------- | ----------------------------------------- | ------------------------------------------------------- |
-| `ready`                 | `{ message: string }`                     | Fired when webcam is initialized.                       |
-| `capture`               | `{ message: string, data: Blob \| null }` | Triggered after image capture.                          |
+| `ready`                 | `{ message: string }`                     | Fired when webcam is initialized and ready.             |
+| `capture`               | `{ message: string, data: Blob \| null }` | Triggered after an image is captured.                   |
 | `quicksnapError`        | `{ message: string }`                     | Emitted when an internal error occurs.                  |
-| `permissionStateUpdate` | `{ status: string }`                      | Fired when permission status changes.                   |
-| `faceDetected`          | `{ faceData: Object }`                    | (Coming Soon) Triggered when a face is detected via AI. |
+| `permissionStateUpdate` | `{ status: string }`                      | Fired on permission change (`granted`, `denied`, etc.). |
+| `faceDetected`          | `{ faceData: Object }`                    | _(Coming Soon)_ Triggered when a face is detected.      |
 
 ---
 
-## **🧠 Framework Integration**
+## **🌐 Framework Integration**
 
-**QuickSnap** works directly in any modern JavaScript framework. Here's how to integrate it:
-
----
-
-### **✅ Vue (Composition API)**
+### ✅ Vue 3 (Composition API)
 
 ```vue
 <template>
@@ -139,7 +133,6 @@ import { ref, onMounted } from "vue";
 import "quicksnap";
 
 const snap = ref(null);
-
 onMounted(() => {
   snap.value?.addEventListener("ready", () => {
     console.log("Vue QuickSnap ready");
@@ -150,18 +143,17 @@ onMounted(() => {
 
 ---
 
-### **✅ React (Functional Component)**
+### ✅ React (Functional Component)
 
 ```jsx
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import "quicksnap";
 
-const CameraComponent = () => {
+const QuickSnapComponent = () => {
   const snapRef = useRef(null);
 
   useEffect(() => {
-    const snap = snapRef.current;
-    snap?.addEventListener("ready", () => {
+    snapRef.current?.addEventListener("ready", () => {
       console.log("React QuickSnap ready");
     });
   }, []);
@@ -169,46 +161,29 @@ const CameraComponent = () => {
   return <quick-snap width="640" height="480" ref={snapRef}></quick-snap>;
 };
 
-export default CameraComponent;
+export default QuickSnapComponent;
 ```
 
-> ✅ **Also works with Angular**, Svelte, Solid, or any modern JavaScript app that supports native Web Components.
+> ✅ Also works with Angular, Qwik, Svelte, Solid, or any modern JavaScript app that supports native Web Components.
 
 ---
 
-## **💡 Features Overview**
+## **🖼 Snapshot Features**
 
-### 🎥 Webcam Core
-
-| Feature                | Description                                                  |
-| ---------------------- | ------------------------------------------------------------ |
-| Webcam access          | Displays live camera via native `<video>`.                   |
-| Auto-start             | Optional `autostart` launches stream on mount.               |
-| Stream control         | Use `start`, `pause`, `resume`, and `stop` for full control. |
-| Device selection       | Use `getAvailableCameras()` with `media-device-id`.          |
-| Reactive permission UX | Automatically responds to permission changes at runtime.     |
+| Feature                | Description                                       |
+| ---------------------- | ------------------------------------------------- |
+| Snapshot capture       | Captures image as a `Blob`.                       |
+| Auto-download          | Instant download using `captureAndDownload()`.    |
+| Format support         | Choose from PNG, JPEG, WEBP, or BMP.              |
+| Flicker effect         | Simulates flash using a subtle capture animation. |
+| Face cropping _(soon)_ | Automatically crops image to fit detected faces.  |
 
 ---
 
-### 📸 Snapshot & Capture
-
-| Feature                 | Description                              |
-| ----------------------- | ---------------------------------------- |
-| Snapshot capture        | Capture still image as a `Blob`.         |
-| Auto-download           | Save image using `captureAndDownload()`. |
-| Format options          | Capture in PNG, JPEG, WEBP, or BMP.      |
-| Flash effect            | Subtle visual flicker on image capture.  |
-| Face auto-crop (coming) | Smart cropping with face detection.      |
-
----
-
-### 🧠 Dynamic Control via JS
-
-Dynamically configure attributes and control camera programmatically:
+## **📲 Dynamic Usage via JavaScript**
 
 ```js
 const snap = document.querySelector("quick-snap");
-
 snap.width = 800;
 snap.format = "image/jpeg";
 snap.autostart = false;
@@ -218,37 +193,29 @@ await snap.start();
 
 ---
 
-## **🧪 Utility Features**
+## **🔐 Permission Handling**
 
-| Utility                 | Description                                               |
-| ----------------------- | --------------------------------------------------------- |
-| Attribute validation    | Enforces correct values for width, format, booleans, etc. |
-| Promise-based structure | All async methods return Promises.                        |
-| Blob/base64 utils       | Internal helpers for image manipulation and downloads.    |
-
----
-
-## **🎨 Visual & UX Feedback**
-
-| Effect / UX          | Description                                                           |
-| -------------------- | --------------------------------------------------------------------- |
-| Capture flicker      | Subtle flash animation when taking a picture.                         |
-| Overlay (permission) | Visible overlay when permissions are denied or required.              |
-| Auto-hide overlay    | Overlay disappears when permissions are granted and stream is active. |
-| Real-time permission | Changes in camera access status are handled on-the-fly.               |
+| Feature             | Description                                                       |
+| ------------------- | ----------------------------------------------------------------- |
+| Permission querying | Use `checkPermissions()` to check access state.                   |
+| Realtime feedback   | `permissionStateUpdate` event reflects live permission changes.   |
+| UX overlays         | Built-in overlays when access is denied or pending user response. |
 
 ---
 
-## **🔒 Permissions**
+## **🧰 Utilities**
 
-| Feature           | Description                                                              |
-| ----------------- | ------------------------------------------------------------------------ |
-| Permission check  | Use `checkPermissions()` to query current state.                         |
-| Live updates      | Listen for `permissionStateUpdate` events for changes.                   |
-| Friendly fallback | Displays overlays and disables stream if permissions are missing/denied. |
+| Utility              | Description                                        |
+| -------------------- | -------------------------------------------------- |
+| Attribute validation | Enforces valid types and formats.                  |
+| Promises             | All async APIs return native Promises.             |
+| Image utilities      | Internal helpers for base64 and download handling. |
 
 ---
 
 ## **🛡 License**
 
-QuickSnap is open-source and licensed under the [MIT License](./LICENSE).
+Licensed under the [MIT License](./LICENSE).  
+QuickSnap is fully open-source and maintained for the community.
+
+---
