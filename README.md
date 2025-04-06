@@ -11,6 +11,8 @@
 ✅ Native, dependency-free, and framework-compatible.  
 ✅ Ideal for onboarding, profile picture capture, or camera utilities.
 
+**Demo Implementation with Vue.js** → https://github.com/sayandeepkarak/quicksnap-demo-vue
+
 ---
 
 ## **🚀 Features at a Glance**
