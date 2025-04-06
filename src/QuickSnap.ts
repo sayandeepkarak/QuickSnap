@@ -8,6 +8,7 @@ class QuickSnap extends HTMLElement {
   public videoElement: HTMLVideoElement;
   public overlayElement: HTMLDivElement;
   private webcam: QuickSnapCam = new QuickSnapCam();
+  private ready: boolean = false;
 
   constructor() {
     super();
@@ -232,7 +233,10 @@ class QuickSnap extends HTMLElement {
           )
         ) {
           this.videoElement.play();
-          this.onReady();
+          if (!this.ready) {
+            this.onReady();
+            this.ready = true;
+          }
         }
         resolve(true);
       };
